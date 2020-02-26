@@ -1,6 +1,7 @@
 package main
 
 import "unsafe"
+import "./internal/types"
 
 //GetClassNames
 //
@@ -16,8 +17,11 @@ import "unsafe"
 //Описание:
 //
 //Получение списка имен объектов компоненты.
-func GetClassNames() {
+func GetClassNames() types.Wchar_t {
 
+	classNames, _ := types.StringToWcharT("new")
+
+	return classNames
 }
 
 //GetClassObject
