@@ -87,15 +87,13 @@ func DestroyObject(pIntf *ComponentObject) int64 {
 //Компонента должна вернуть версию, с которой она может работать.
 //Если функция не реализована, то для компоненты не будут доступны возможности вывода сообщений, запроса информации о платформе.
 
-func SetPlatformCapabilities(pIntf *ComponentObject) int {
+func SetPlatformCapabilities(pIntf *IComponentBase) int {
 
 	return 1
 
 }
 
-type IComponentBase unsafe.Pointer
-
-type ComponentObject interface {
+type IComponentBase interface {
 	//func Init([MarshalAs(UnmanagedType.IDispatch)] object connection)
 	//func Done();
 	//func GetInfo([MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_VARIANT)] ref object[] info);
