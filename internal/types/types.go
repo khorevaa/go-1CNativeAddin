@@ -1,12 +1,12 @@
 package types
 
 const (
-	S_OK int = 0
+	S_OK ADDIN_BOOL = 0
 
-	S_FALSE      int     = 1
-	E_POINTER    uintptr = 0x80004003
-	E_FAIL       uintptr = 0x80004005
-	E_UNEXPECTED uintptr = 0x8000FFFF
+	S_FALSE      ADDIN_BOOL = 1
+	E_POINTER    uintptr    = 0x80004003
+	E_FAIL       uintptr    = 0x80004005
+	E_UNEXPECTED uintptr    = 0x8000FFFF
 
 	ADDIN_E_NONE             int = 1000
 	ADDIN_E_ORDINARY             = 1001
@@ -19,3 +19,5 @@ const (
 	ADDIN_E_MSGBOX_INFO          = 1008
 	ADDIN_E_MSGBOX_FAIL          = 1009
 )
+
+type ADDIN_BOOL int
