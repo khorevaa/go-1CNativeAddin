@@ -1,13 +1,13 @@
 package wrapper
 
+import "C"
 import (
-	"../types"
 	"unsafe"
 )
 
 type NativeAddinWrapper interface {
-	GetClassNames() types.Wchar_t
-	GetClassObject(clsName types.Wchar_t, pIntf *unsafe.Pointer) int64
+	GetClassNames() *C.wchar_t
+	GetClassObject(clsName *C.wchar_t, pIntf *unsafe.Pointer) int64
 	DestroyObject(pIntf *unsafe.Pointer) int64
 	SetPlatformCapabilities(pIntf *unsafe.Pointer) int64
 }
@@ -51,16 +51,16 @@ func (obj *NativeObjectWrapper) AddClass(name string, f CreateClassObject) {
 	obj.classes[name] = f
 }
 
-func (obj *NativeObjectWrapper) GetClassNames() types.Wchar_t {
+func (obj *NativeObjectWrapper) GetClassNames() *C.wchar_t {
 
-	str, _ := types.StringToWcharT(obj.Namespace)
+	str, _ := StringToWcharT(obj.Namespace)
 	return str
 
 }
 
-func (obj *NativeObjectWrapper) GetClassObject(clsName types.Wchar_t, pIntf *unsafe.Pointer) int64 {
+func (obj *NativeObjectWrapper) GetClassObject(clsName *C.wchar_t, pIntf *unsafe.Pointer) int64 {
 
-	className, err := types.WcharTToString(clsName)
+	className, err := WcharTToString(clsName)
 
 	if err != nil {
 		return 1

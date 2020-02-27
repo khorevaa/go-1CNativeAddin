@@ -1,26 +1,41 @@
 package wrapper
 
+import "C"
 import "../types"
 
 type IAddInDefBaseWrapper interface {
-	AddError(wcode int, source, descr types.Wchar_t, scode int64) types.ADDIN_BOOL
+	AddError(wcode int, source, descr *C.wchar_t, scode int64) types.ADDIN_BOOL
 
-	Read(wszPropName types.Wchar_t, pVal uintptr, pErrCode int64, errDescriptor types.Wchar_t) types.ADDIN_BOOL
-	Write(wszPropName types.Wchar_t, pVal uintptr, pErrCode int64, errDescriptor types.Wchar_t) types.ADDIN_BOOL
+	Read(wszPropName *C.wchar_t, pVal uintptr, pErrCode int64, errDescriptor *C.wchar_t) types.ADDIN_BOOL
+	Write(wszPropName *C.wchar_t, pVal uintptr, pErrCode int64, errDescriptor *C.wchar_t) types.ADDIN_BOOL
 
-	RegisterProfileAs(wszProfileName types.Wchar_t) types.ADDIN_BOOL
+	RegisterProfileAs(wszProfileName *C.wchar_t) types.ADDIN_BOOL
 
 	SetEventBufferDepth(lDepth int64) types.ADDIN_BOOL
 	GetEventBufferDepth() int64
 
-	ExternalEvent(wszSource, wszMessage, wszData types.Wchar_t) types.ADDIN_BOOL
+	ExternalEvent(wszSource, wszMessage, wszData *C.wchar_t) types.ADDIN_BOOL
 	CleanEventBuffer()
 
-	SetStatusLine(wszStatusLine types.Wchar_t) types.ADDIN_BOOL
+	SetStatusLine(wszStatusLine *C.wchar_t) types.ADDIN_BOOL
 	ResetStatusLine()
 }
 
-type IAddInDefBase struct {
+type IAddInDefBase interface {
+	AddError(wcode int, source, descr string, scode int64) bool
+	Read(wszPropName string, pVal uintptr, pErrCode int64, errDescriptor string) bool
+	Write(wszPropName string, pVal uintptr, pErrCode int64, errDescriptor string) bool
+
+	RegisterProfileAs(wszProfileName string) bool
+
+	SetEventBufferDepth(lDepth int64) bool
+	GetEventBufferDepth() int64
+
+	ExternalEvent(wszSource, wszMessage, wszData string) bool
+	CleanEventBuffer()
+
+	SetStatusLine(wszStatusLine string) bool
+	ResetStatusLine()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
