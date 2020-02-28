@@ -1,0 +1,92 @@
+project_name: 1CNativeAddIn
+
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://goproxy.io
+before:
+  hooks:
+#    - go mod tidy
+    - sudo apt-get install -y uuid-dev gcc-mingw-w64 gcc-multilib
+builds:
+  - id: windows-amd64
+    goos:
+      - windows
+    goarch:
+
+      - amd64
+    env:
+      - CGO_ENABLED=1
+      - CC=x86_64-w64-mingw32-gcc
+      - CXX=x86_64-w64-mingw32-g++
+    flags: -buildmode=c-shared
+    ldflags: -s -w
+    main: ./main.go
+    binary: 1CNativeAddIn
+
+  - id: windows-i386
+    goos:
+      - windows
+    goarch:
+      - 386
+    env:
+      - CGO_ENABLED=1
+      - CXXT=i686-w64-mingw32-g++
+      - CC=i686-w64-mingw32-gcc
+    flags: -buildmode=c-shared
+    ldflags: -s -w
+    main: ./main.go
+    binary: 1CNativeAddIn
+
+  - id: linux
+    flags: -buildmode=c-shared
+    ldflags: -s -w
+    binary: 1CNativeAddIn.so
+    env:
+      - CGO_ENABLED=1
+    main: ./main.go
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - 386
+
+#  - id: linux-i386
+#    flags: -buildmode=c-shared
+#    ldflags: -s -w
+#    binary: 1CNativeAddIn.so
+#    env:
+#      - CGO_ENABLED=1
+##      - CXXT=i686-w64-mingw32-g++
+##      - CC=i686-w64-mingw32-gcc
+#    main: ./main.go
+#    goos:
+#      - linux
+#    goarch:
+#      - 386
+
+dist: bin
+
+checksum:
+  name_template: '{{ .ProjectName }}_checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - Merge pull request
+      - Merge branch
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+#  - format: binary
+##    builds:
+##      - dll

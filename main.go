@@ -1,13 +1,25 @@
 package main
 
 import "unsafe"
-import "./internal/wrapper"
+import "github.com/khorevaa/go-1CNativeAddin/internal/wrapper"
 
 // #include <./include/types.h>
 // //typedef long GoInt64;
 import "C"
 
 var component *NativeComponent
+
+type NativeComponent struct {
+	wrapper.NativeObjectWrapper
+}
+
+func NewNativeComponent(name string) *NativeComponent {
+
+	return &NativeComponent{
+		wrapper.NativeObjectWrapper{Namespace: name},
+	}
+}
+
 
 func main() {
 

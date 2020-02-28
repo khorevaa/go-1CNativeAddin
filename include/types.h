@@ -2,6 +2,8 @@
 #ifndef __CON_TYPES_H__
 #define __CON_TYPES_H__
 
+#include "com.h"
+
 #ifdef _WINDOWS
 #include <windows.h>
 #endif
@@ -10,13 +12,12 @@
 #pragma GCC system_header
 #endif
 
-#include "com.h"
+
 #include <time.h>
 #include <string.h>
 #include <assert.h>
 #include <stddef.h>
 #include <stdbool.h>
-//#include <uuid/uuid.h>
 
 #define EXTERN_C extern "C"
 
@@ -85,12 +86,11 @@
 #else
 #define WCHAR_T     uint16_t
 #endif //_WINDOWS
-
-typedef uint32_t GUID;
-typedef uint32_t IID;
-typedef uint32_t UUID;
-typedef double              DATE;
-
+//
+//typedef uint32_t GUID;
+//typedef uint32_t IID;
+//typedef uint32_t UUID;
+//typedef double              DATE;
 
 typedef unsigned short TYPEVAR;
 enum ENUMVAR
@@ -153,14 +153,14 @@ struct _tVariant
         bool           bVal;
         char           chVal;
         wchar_t        wchVal;
-        DATE           date;
-        IID            IDVal;
+//        DATE           date;
+//        IID            IDVal;
         struct _tVariant *pvarVal;
         struct tm      tmVal;
         _ANONYMOUS_STRUCT struct 
         {
             void*  pInterfaceVal;
-            IID        InterfaceID;
+            uint32_t        InterfaceID;
         } __VARIANT_NAME_2/*iface*/;
         _ANONYMOUS_STRUCT struct 
         {
